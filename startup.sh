@@ -18,33 +18,37 @@ rm ProFont.zip
 fc-cache -fv
 # Setup p10k
 echo "setup p10k"
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
 sed -i 's/robbyrussell/powerlevel10k\/powerlevel10k/' ~/.zshrc
 # install plugins
 echo "setup rest of plugins"
 ## zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-autosuggestions \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    $ZSH_CUSTOM/plugins/zsh-autosuggestions
+## zsh-autocomplete
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git \
+    $ZSH_CUSTOM/plugins/zsh-autocomplete
+
 ## zsh-syntax-highlighting
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 ## fast-syntax-highlighting
 git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git \
-    ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+    $ZSH_CUSTOM/plugins/fast-syntax-highlighting
 ## fzf-tab
 git clone https://github.com/Aloxaf/fzf-tab \
-    ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
-
+    $ZSH_CUSTOM/plugins/fzf-tab
 
 ## prevent any format problems
-find ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
-find ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+find $ZSH_CUSTOM/plugins/zsh-autosuggestions -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+find $ZSH_CUSTOM/plugins/zsh-autocomplete -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+find $ZSH_CUSTOM/plugins/zsh-syntax-highlighting -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
 
-find ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
-find ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+find $ZSH_CUSTOM/plugins/fast-syntax-highlighting -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
+find $ZSH_CUSTOM/plugins/fzf-tab -type f -print0 | xargs -0 -n 1 -P 4 dos2unix
 
 ## replace plugins
-sed -i "s/(git)/(git sudo z zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting fzf-tab)/" ~/.zshrc
+sed -i "s/(git)/(git sudo z zsh-autosuggestions zsh-autocomplete zsh-syntax-highlighting fast-syntax-highlighting fzf-tab)/" ~/.zshrc
 ## welcome messgae
 sed -i '1 i\figlet "WELCOME BACK TOMMY" | lolcat -f' ~/.zshrc
 sed -i '2 i\fortune | cowsay | lolcat -f' ~/.zshrc
